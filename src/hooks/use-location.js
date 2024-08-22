@@ -1,16 +1,19 @@
   import { useEffect, useState } from "react";
   import axios from "axios";
+import getGeoApiKey from "../../config/geocode_api";
+import getBaseUrl from "../../config/geoBaseUrl";
 
-  const APIkey = import.meta.env.VITE_APP_GEO_API_KEY;
-
+ 
   function useLocation() {
     const [location, setLocation] = useState(null);
     const [coords, setCoords] = useState({ latitude: null, longitude: null });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const APIkey = getGeoApiKey();
+    const baseUrl = getBaseUrl();
 
     const fetchLocationInfo = async (latitude, longitude) => {
-      const url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude},${longitude}&key=${APIkey}`;
+      const url = `${baseUrl}/geocode/v1/json?q=${latitude},${longitude}&key=${APIkey}`;
       try {
         const { data } = await axios.get(url);
         if (data.status.code === 200 && data.results.length > 0) {

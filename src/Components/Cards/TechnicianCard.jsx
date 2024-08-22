@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import PropTypes from 'prop-types';
 import { Avatar, Badge, Box, Button, Card, CardBody, CardFooter, CardHeader, Flex, Heading, IconButton, Text } from '@chakra-ui/react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { BiChat, BiShare } from 'react-icons/bi';
-import calculateDistance from '../../hooks/calculate-distance'; // Updated import
+import { motion } from 'framer-motion'; // Import framer-motion
+import calculateDistance from '../../hooks/calculate-distance';
 import useLocation from '../../hooks/use-location';
 
-const TechnicianCard = ({ technician }) => {
+const TechnicianCard = lazy(() => import('./TechnicianCard')); // Lazy load the TechnicianCard
+
+const TechnicianCardComponent = ({ technician }) => {
   const { location, coords, loading, error } = useLocation();
 
   if (loading) {
@@ -23,52 +26,58 @@ const TechnicianCard = ({ technician }) => {
   }
 
   const distance = calculateDistance(
-    coords.latitude, 
-    coords.longitude, 
-    technician.location.latitude, 
+    coords.latitude,
+    coords.longitude,
+    technician.location.latitude,
     technician.location.longitude
   );
 
   return (
-    <Card maxW='sm' variant='outline'>
-      <CardHeader>
-        <Flex spacing='4'>
-          <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-            <Avatar name={technician.name} />
-            <Box>
-              <Heading size='sm'>{technician.name}</Heading>
-              <Text>{technician.specialization}</Text>
-            </Box>
+    <motion.div
+      initial={{ x: 100, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      exit={{ x: -100, opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <Card maxW='sm' variant='outline' borderRadius='30px'> {/* Add 30px radius */}
+        <CardHeader>
+          <Flex spacing='4'>
+            <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
+              <Avatar name={technician.name} />
+              <Box>
+                <Heading size='sm'>{technician.name}</Heading>
+                <Text>{technician.specialization}</Text>
+              </Box>
+            </Flex>
+            <IconButton
+              variant='ghost'
+              colorScheme='gray'
+              aria-label='See menu'
+              icon={<BsThreeDotsVertical />}
+            />
           </Flex>
-          <IconButton
-            variant='ghost'
-            colorScheme='gray'
-            aria-label='See menu'
-            icon={<BsThreeDotsVertical />}
-          />
-        </Flex>
-      </CardHeader>
-      <CardBody sx={{ textAlign: 'start' }}>
-        <Text alignItems='flex-start'>Location: {technician.location.address}</Text>
-        {/* <Text alignItems='flex-start'>Coordinates: {technician.location.latitude}, {technician.location.longitude}</Text> */}
-        <Badge colorScheme={technician.status === 'Available' ? "green" : technician.status === 'Booked' ? "purple" : "blue"}>
-          {technician.status}
-        </Badge>
-        <Text>Distance: {distance.toFixed(2)} km Away</Text>
-      </CardBody>
-      <CardFooter justify='space-between' flexWrap='wrap' sx={{ '& > button': { minW: '136px' } }}>
-        <Button flex='1' variant='ghost' leftIcon={<BiChat />}>
-          Request
-        </Button>
-        <Button flex='1' variant='ghost' leftIcon={<BiShare />}>
-          Book
-        </Button>
-      </CardFooter>
-    </Card>
+        </CardHeader>
+        <CardBody sx={{ textAlign: 'start' }}>
+          <Text alignItems='flex-start'>{technician.location.address}</Text>
+          <Badge colorScheme={technician.status === 'available' ? "green" : technician.status === 'booked' ? "purple" : "blue"}>
+            {technician.status}
+          </Badge>
+          <Text>{distance.toFixed(2)} km Away</Text>
+        </CardBody>
+        <CardFooter justify='space-between' flexWrap='wrap' sx={{ '& > button': { minW: '136px' } }}>
+          <Button flex='1' variant='ghost' leftIcon={<BiChat />}>
+            Request
+          </Button>
+          <Button flex='1' variant='ghost' leftIcon={<BiShare />}>
+            Book
+          </Button>
+        </CardFooter>
+      </Card>
+    </motion.div>
   );
 };
 
-TechnicianCard.propTypes = {
+TechnicianCardComponent.propTypes = {
   technician: PropTypes.shape({
     name: PropTypes.string.isRequired,
     email: PropTypes.string,
@@ -84,4 +93,4 @@ TechnicianCard.propTypes = {
   }).isRequired
 };
 
-export default TechnicianCard;
+export default TechnicianCardComponent;

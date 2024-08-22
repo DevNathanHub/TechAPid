@@ -1,25 +1,28 @@
 import React from 'react';
+import { HStack, VStack, Text, Box } from '@chakra-ui/react';
+import { FaLocationArrow } from 'react-icons/fa';
 import useLocation from '../hooks/use-location';
 
 const LocationComponent = () => {
   const { location, coords, loading, error } = useLocation();
 
-  if (loading) return <div>Loading location data...</div>;
-  if (error) return <div>Error Loading Your Location</div>;
+  if (loading) return <Text>Loading location data...</Text>;
+  if (error) return <Text>Error Loading Your Location</Text>;
 
   return (
-    <div>
-      <h1>Location Information</h1>
+    <Box p={2} maxW="sm" ml="auto">
       {location ? (
-        <>
-          <p><strong>Location:</strong> {location}</p>
-          <p><strong>Latitude:</strong> {coords.latitude}</p>
-          <p><strong>Longitude:</strong> {coords.longitude}</p>
-        </>
+        <VStack align="start" spacing={1}>
+          <HStack spacing={1} align="center">
+            <FaLocationArrow size="12px" />
+            <Text fontWeight="bold" fontSize="xs">My Location:</Text>
+            <Text fontSize="xs">{location}</Text>
+          </HStack>
+        </VStack>
       ) : (
-        <p>No location data available.</p>
+        <Text fontSize="sm">No location data available.</Text>
       )}
-    </div>
+    </Box>
   );
 };
 
