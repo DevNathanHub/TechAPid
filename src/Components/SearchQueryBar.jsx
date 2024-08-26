@@ -5,8 +5,11 @@ const SearchQueryBar = ({ onSearch }) => {
   return (
     <Box mb={4}>
       <Input 
-        placeholder="Search by name or location..." 
+        placeholder="Search by name, specialization or location..." 
         onChange={e => onSearch(e.target.value)}
+        borderRadius='30px'
+        color='black'
+        shadow='md'
       />
     </Box>
   );

@@ -10,12 +10,11 @@ const LocationComponent = () => {
   if (error) return <Text>Error Loading Your Location</Text>;
 
   return (
-    <Box p={2} maxW="sm" ml="auto">
+    <Box p={2} maxW="sm" ml="auto" color='white'>
       {location ? (
         <VStack align="start" spacing={1}>
           <HStack spacing={1} align="center">
             <FaLocationArrow size="12px" />
-            <Text fontWeight="bold" fontSize="xs">My Location:</Text>
             <Text fontSize="xs">{location}</Text>
           </HStack>
         </VStack>

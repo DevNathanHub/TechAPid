@@ -3,7 +3,6 @@ import { Grid, GridItem, VStack, Text } from '@chakra-ui/react';
 import FiltersDropdowns from './FiltersDropdowns';
 import SearchQueryBar from './SearchQueryBar';
 import TechnicianCardComponent from './Cards/TechnicianCard';
-import LocationComponent from './LocationComponent';
 
 const TechnicianList = ({ technicians }) => {
   const [filters, setFilters] = useState({});
@@ -28,14 +27,13 @@ const TechnicianList = ({ technicians }) => {
         (!filters.specialization || technician.specialization === filters.specialization) &&
         (!filters.status || technician.status === filters.status) &&
         (!filters.yearsOfExperience || technician.yearsOfExperience >= parseInt(filters.yearsOfExperience, 10)) &&
-        (!searchQuery || technician.name.toLowerCase().includes(searchQuery) || technician.location.address.toLowerCase().includes(searchQuery))
+        (!searchQuery || technician.name.toLowerCase().includes(searchQuery) || technician.specialization.toLowerCase().includes(searchQuery) || technician.location.address.toLowerCase().includes(searchQuery))
       );
     });
   }, [filters, searchQuery, technicians]);
 
   return (
     <VStack spacing={6} align="stretch">
-      <LocationComponent/>
       <FiltersDropdowns onFilterChange={handleFilterChange} onResetFilters={handleResetFilters} />
       <SearchQueryBar onSearch={handleSearch} />
      

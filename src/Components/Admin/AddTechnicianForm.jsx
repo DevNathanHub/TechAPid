@@ -1,4 +1,3 @@
-// src/Components/Admin/AddTechnicianForm.js
 import React, { useState } from 'react';
 import {
   Box,
@@ -10,8 +9,10 @@ import {
   VStack,
   Textarea,
   Grid,
+  useToast,
+  Heading,
 } from '@chakra-ui/react';
-import api from '../../../config/api';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const AddTechnicianForm = ({ onAddTechnician }) => {
   const [technician, setTechnician] = useState({
@@ -29,6 +30,9 @@ const AddTechnicianForm = ({ onAddTechnician }) => {
   });
 
   const [isManualEntry, setIsManualEntry] = useState(false);
+
+  const toast = useToast(); // Initialize useToast
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -48,11 +52,16 @@ const AddTechnicianForm = ({ onAddTechnician }) => {
       },
     }));
   };
- 
+
   const fetchCoordinates = async (address) => {
     try {
+      console.log(`Fetching coordinates for address: ${address}`);
+      // Example API URL and key, replace with actual values if needed
+      const baseUrl = import.meta.env.VITE_APP_BASE_URL;
+      const apiGeoKey = import.meta.env.VITE_APP_GEO_API_KEY;
       const response = await fetch(`${baseUrl}/geocode/v1/json?q=${encodeURIComponent(address)}&key=${apiGeoKey}`);
       const data = await response.json();
+      console.log('Geocoding API response:', data);
       if (data.results && data.results[0]) {
         const coordinates = data.results[0].geometry;
         setTechnician((prev) => ({
@@ -80,23 +89,29 @@ const AddTechnicianForm = ({ onAddTechnician }) => {
     if (!technician.location.address) {
       console.error("Please enter an address to autofill coordinates.");
       return;
-
-    }else{
-     setIsManualEntry(false);
-     const coords = await fetchCoordinates(technician.location.address);
-     return coords
+    } else {
+      setIsManualEntry(false);
+      const coords = await fetchCoordinates(technician.location.address);
+      return coords;
     }
-
-    ;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Send technician data to the API
-      const response = await api.post('/technicians', technician);
-      console.log('Technician added successfully:', response.data);
-      onAddTechnician(technician); // Update local state
+      console.log('Technician data to be submitted:', technician);
+      // Simulate API request
+      console.log('Sending technician data to API...');
+      // const response = await api.post('/technicians', technician);
+      // console.log('Technician added successfully:', response.data);
+
+      // For debugging purposes, we'll just log the data
+      console.log('Technician added successfully:', technician);
+
+      // Update local state
+      onAddTechnician(technician);
+
+      // Reset form
       setTechnician({
         name: '',
         email: '',
@@ -110,14 +125,36 @@ const AddTechnicianForm = ({ onAddTechnician }) => {
         },
         status: 'available',
       });
+
+      // Show success toast
+      toast({
+        title: "Technician added.",
+        description: "The technician has been successfully added.",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
+
+      // Navigate to success page
+      navigate('/success');
     } catch (error) {
       console.error('Error adding technician:', error);
+
+      // Show error toast
+      toast({
+        title: "Error.",
+        description: "There was an error adding the technician.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
     }
   };
 
   return (
-    <Box as="form" onSubmit={handleSubmit} p={4} borderWidth="1px" borderRadius="lg" maxW="lg">
-      <VStack spacing={4}>
+    <Box as="form" onSubmit={handleSubmit} p={4} borderRadius="30px" maxW="lg">
+      <Heading mb={4}>Become Technician</Heading>
+      <Grid templateColumns="repeat(2, 1fr)" gap={4}>
         <FormControl isRequired>
           <FormLabel>Name</FormLabel>
           <Input
@@ -170,7 +207,7 @@ const AddTechnicianForm = ({ onAddTechnician }) => {
             placeholder="Enter years of experience"
           />
         </FormControl>
-        <FormControl isRequired>
+        <FormControl isRequired gridColumn="span 2">
           <FormLabel>Location</FormLabel>
           <Textarea
             name="address"
@@ -198,10 +235,10 @@ const AddTechnicianForm = ({ onAddTechnician }) => {
             />
           </Grid>
         </FormControl>
-        <Button colorScheme="teal" type="submit" width="full">
-          Add Technician
-        </Button>
-      </VStack>
+      </Grid>
+      <Button colorScheme="teal" type="submit" width="full" mt={4}>
+        Submit Application
+      </Button>
     </Box>
   );
 };

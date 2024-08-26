@@ -54,6 +54,25 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+.primary-gradient{
+  background: rgb(2,0,36);
+  background: linear-gradient(90deg,  rgba(0,212,255,1) 0%, rgba(9,9,121,1) 100%);
+}
+
+.back-svg{
+  background: url(https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.complypartner.com%2Fform-aoc-4-2%2F14-146191_vector-background-abstract-png-blue%2F&psig=AOvVaw1IDdtRqqjFVLCf6Mp6OPrx&ust=1724713460881000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCKCoi8-gkYgDFQAAAAAdAAAAABAJ);
+  background-size: 500px 350px;
+  background-repeat: no-repeat;
+
+}
+
+.glass{
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background-color: rgba(255, 255, 255, 0.75);
+  border-radius: 12px;
+  border: 1px solid rgba(209, 213, 219, 0.3);
+}
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

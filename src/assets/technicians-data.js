@@ -11,6 +11,8 @@ const techniciansData = [
             address: 'Migori Road, Nairobi, Nairobi County, Kenya'
         },
         status: 'available',
+        reviewCount: 13,
+        rating: 4,
     },
     {
         name: 'Jane Smith',
@@ -24,6 +26,8 @@ const techniciansData = [
             address: '456 Kisumu St, Kisumu, Kisumu County, Kenya'
         },
         status: 'booked',
+        reviewCount: 10,
+        rating: 4,
     },
     {
         name: 'Mike Johnson',
@@ -37,6 +41,8 @@ const techniciansData = [
             address: '789 Mombasa Ave, Mombasa, Mombasa County, Kenya'
         },
         status: 'unavailable',
+        reviewCount: 10,
+        rating: 4,
     },
     {
         name: 'Emily Davis',
@@ -50,6 +56,8 @@ const techniciansData = [
             address: '101 Pine St, Eldoret, Uasin Gishu County, Kenya'
         },
         status: 'unavailable',
+        reviewCount: 10,
+        rating: 4,
     },
     {
         name: 'James Wilson',
@@ -63,6 +71,8 @@ const techniciansData = [
             address: '202 Oak St, Nyeri, Nyeri County, Kenya'
         },
         status: 'unavailable',
+        reviewCount: 10,
+        rating: 4,
     },
     {
         name: 'Anna Brown',
@@ -76,6 +86,8 @@ const techniciansData = [
             address: '303 Cedar St, Nakuru, Nakuru County, Kenya'
         },
         status: 'available',
+        reviewCount: 10,
+        rating: 4,
     },
     {
         name: 'David Clark',
@@ -89,6 +101,9 @@ const techniciansData = [
             address: '404 Birch St, Westlands, Nairobi County, Kenya'
         },
         status: 'booked',
+        reviewCount: 10,
+        rating: 4,
+
     },
     {
         name: 'Sarah Martinez',
@@ -102,6 +117,8 @@ const techniciansData = [
             address: '505 Spruce St, Malindi, Kilifi County, Kenya'
         },
         status: 'available',
+        reviewCount: 10,
+        rating: 4,
     },
     {
         name: 'Robert Lee',
@@ -115,6 +132,8 @@ const techniciansData = [
             address: '606 Fir St, Thika, Kiambu County, Kenya'
         },
         status: 'available',
+        reviewCount: 10,
+        rating: 4,
     },
     {
         name: 'Laura Walker',
@@ -128,6 +147,8 @@ const techniciansData = [
             address: '707 Redwood St, Nanyuki, Laikipia County, Kenya'
         },
         status: 'unavailable',
+        reviewCount: 10,
+        rating: 4,
     }
 ];
 
