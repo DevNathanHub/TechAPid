@@ -13,6 +13,7 @@
     import Signup from './Components/Signup';
     import Login from './Components/Login';
   import Help from './Components/Help';
+import Home from './Home';
 
     function App() {
       const [technicians, setTechnicians] = useState(techniciansData);
@@ -28,7 +29,7 @@
               {/* Add buttons or other elements here if needed */}
             </HStack>
             <Routes>
-              <Route path="/" element={<LocationComponent />} />
+              <Route path="/" element={<Home />} />
               <Route path="/schedules" element={<Schedules />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
