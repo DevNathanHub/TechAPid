@@ -10,7 +10,7 @@ function Home() {
   fontSize='6xl'
   fontWeight='extrabold'
 >
-  Welcome to Tech-Aid UI
+  Welcome to Tech-Aid 
 </Text>
 
 
